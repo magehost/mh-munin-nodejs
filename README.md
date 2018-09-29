@@ -6,7 +6,7 @@ MageHost's NodeJS scripts for Munin
 (
     umask 0022
     cd /usr/local/lib
-    npm install git+ssh://git@github.com:magehost/mh-munin-nodejs.git
+    npm install --no-progress git+ssh://git@github.com:magehost/mh-munin-nodejs.git
 )
 sudo -u munin  /usr/local/lib/node_modules/mh-munin-nodejs/loadtimes.js  https://magehost.pro
 ```
