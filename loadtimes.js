@@ -13,7 +13,7 @@ async function run() {
   await page.goto( process.argv[2] );
 
   const perfJson = await page.evaluate( () => JSON.stringify(performance.getEntriesByType('navigation')[0]) );
-  process.stdout.write( perfJson );  
+  process.stdout.write( perfJson + "\n" );  
 
   browser.close();
 }
