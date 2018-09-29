@@ -3,6 +3,7 @@ MageHost's NodeJS scripts for Munin
 
 ## Install
 ```
+apt-get --yes  install  libxss1
 (
     umask 0022
     cd /usr/local/lib
