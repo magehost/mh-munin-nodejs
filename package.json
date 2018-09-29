@@ -1,0 +1,23 @@
+{
+  "name": "mh-munin-nodejs",
+  "version": "1.0.0",
+  "description": "MageHost's NodeJS scripts for Munin",
+  "main": "loadtimes.js",
+  "dependencies": {
+    "puppeteer": "^1.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/magehost/mh-munin-nodejs.git"
+  },
+  "author": "Jeroen Vermeulen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/magehost/mh-munin-nodejs/issues"
+  },
+  "homepage": "https://github.com/magehost/mh-munin-nodejs#readme"
+}
