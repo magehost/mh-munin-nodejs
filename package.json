@@ -21,7 +21,7 @@
     "url": "git+ssh://git@github.com/magehost/mh-munin-nodejs.git"
   },
   "scripts": {
-    "test": "loadtimes.js https://magehost.pro/"
+    "test": "./loadtimes.js https://magehost.pro/"
   },
   "version": "1.0.0"
 }
