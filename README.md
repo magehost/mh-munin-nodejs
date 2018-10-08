@@ -11,3 +11,12 @@ MageHost's NodeJS scripts for Munin
     sudo -u munin  /usr/local/lib/node_modules/mh-munin-nodejs/loadtimes.js  https://magehost.pro
 )
 ```
+
+## Develop
+As non-root user:
+```
+git clone git@github.com:magehost/mh-munin-nodejs.git
+cd mh-munin-nodejs
+npm install
+./loadtimes.js https://magehost.pro
+```
