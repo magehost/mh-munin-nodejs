@@ -12,6 +12,16 @@ MageHost's NodeJS scripts for Munin
 )
 ```
 
+## Update
+```
+(
+    umask 0022
+    cd /usr/local/lib
+    npm update mh-munin-nodejs
+    sudo -u munin  /usr/local/lib/node_modules/mh-munin-nodejs/loadtimes.js  https://magehost.pro
+)
+```
+
 ## Develop
 As non-root user:
 ```
