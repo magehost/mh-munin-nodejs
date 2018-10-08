@@ -12,6 +12,8 @@ if ( process.argv.length < 3 ) {
 (async() => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  const defaultUserAgent = await page.evaluate('navigator.userAgent');
+  await page.setUserAgent(defaultUserAgent + ' - MageHost.pro Munin LoadTimes Measure');  
   await page.goto( process.argv[2] );
   console.log(
       await page.evaluate( () => { 
