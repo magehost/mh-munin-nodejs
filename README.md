@@ -23,10 +23,18 @@ MageHost's NodeJS scripts for Munin
 ```
 
 ## Develop
-As non-root user:
+### As non-root user on Linux:
 ```
 git clone git@github.com:magehost/mh-munin-nodejs.git
 cd mh-munin-nodejs
 npm install
 ./loadtimes.js https://magehost.pro
+```
+### On Mac:
+```
+brew install node
+git clone git@github.com:magehost/mh-munin-nodejs.git
+cd mh-munin-nodejs
+npm install
+node ./loadtimes.js https://magehost.pro
 ```
