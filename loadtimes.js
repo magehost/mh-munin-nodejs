@@ -54,5 +54,3 @@ if (process.argv.length < 3) {
     });
 })();
 
-process.exit();
-
