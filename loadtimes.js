@@ -1,5 +1,11 @@
 #!/usr/bin/nodejs
 
+//
+// To test during dev:
+//     chgrp -R  munin  /data/repos/mh-munin-nodejs
+//     sudo  -u munin  nodejs  /data/repos/mh-munin-nodejs/loadtimes.js  https://magehost.pro/
+//
+
 'use strict';
 
 const puppeteer = require('puppeteer');
@@ -30,4 +36,7 @@ if (process.argv.length < 3) {
         console.log('ERROR URL Load failed: ' + err);
         browser.close();
     });
-})();
+}).catch(function(err) {
+        console.log('ERROR: ' + err);
+    }
+)();
