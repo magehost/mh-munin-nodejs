@@ -33,7 +33,7 @@ if (process.argv.length < 3) {
             browser.close();
             process.exit(32);
         });
-    page.goto(process.argv[2]).then(function () {
+    page.goto(process.argv[2], {timeout: 20 * 1000}).then(function () {
         page.evaluate(() => {
             return JSON.stringify({
                 'timing': performance.timing,
