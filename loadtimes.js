@@ -16,9 +16,23 @@ if (process.argv.length < 3) {
 }
 
 (async () => {
-    const browser = await puppeteer.launch( { ignoreHTTPSErrors: true} );
-    const page = await browser.newPage();
-    await page.setUserAgent('MageHost.pro Munin LoadTimes Measure');
+    const browser = await puppeteer.launch( { ignoreHTTPSErrors: true} ).catch(
+        function (err) {
+            console.log('ERROR Creating browser: ' + err);
+            process.exit(22);
+        });
+    const page = await browser.newPage().catch(
+        function (err) {
+            console.log('ERROR Creating new page: ' + err);
+            browser.close();
+            process.exit(27);
+        });
+    await page.setUserAgent('MageHost.pro Munin LoadTimes Measure').catch(
+        function (err) {
+            console.log('ERROR Setting user agent: ' + err);
+            browser.close();
+            process.exit(32);
+        });
     page.goto(process.argv[2]).then(function () {
         page.evaluate(() => {
             return JSON.stringify({
@@ -31,12 +45,14 @@ if (process.argv.length < 3) {
         }).catch(function (err) {
             console.log('ERROR Page Evaluate failed: ' + err);
             browser.close();
+            process.exit(46);
         });
     }).catch(function (err) {
         console.log('ERROR URL Load failed: ' + err);
         browser.close();
+        process.exit(51);
     });
-}).catch(function(err) {
-        console.log('ERROR: ' + err);
-    }
-)();
+})();
+
+process.exit();
+
