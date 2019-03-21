@@ -23,5 +23,5 @@
   "scripts": {
     "test": "./loadtimes.js https://magehost.pro/"
   },
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
