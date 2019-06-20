@@ -6,6 +6,8 @@
 //     sudo  -u munin  nodejs  /data/repos/mh-munin-nodejs/loadtimes.js  https://magehost.pro/
 //
 
+// After updating: don't forget to increase version in package.json
+
 'use strict';
 
 const puppeteer = require('puppeteer');
