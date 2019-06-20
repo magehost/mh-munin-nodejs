@@ -33,6 +33,15 @@ if (process.argv.length < 3) {
             browser.close();
             process.exit(32);
         });
+    await page.setRequestInterception(true);
+    page.on('request', request => {
+        if ( request.url().includes('google-analytics') &&
+             (request.url().includes('/collect') || request.url().includes('/batch')) ) {
+            request.abort();
+        } else {
+            request.continue();
+        }
+    });
     page.goto(process.argv[2], {timeout: 20 * 1000}).then(function () {
         page.evaluate(() => {
             return JSON.stringify({
