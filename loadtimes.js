@@ -38,9 +38,15 @@ if (process.argv.length < 3) {
     await page.setRequestInterception(true);
     page.on('request', request => {
         if ( request.url().includes('google-analytics') &&
-             (request.url().includes('/collect') || request.url().includes('/batch')) ) {
+             ( request.url().includes('/collect') ||
+               request.url().includes('/batch') ||
+               request.url().includes('/__utm')
+             )
+           ) {
+            // console.log("# SKIP:  " + request.url() + "\n");
             request.abort();
         } else {
+            // console.log("# Allow: " + request.url() + "\n");
             request.continue();
         }
     });
