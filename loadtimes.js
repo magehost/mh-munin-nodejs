@@ -18,7 +18,10 @@ if (process.argv.length < 3) {
 }
 
 (async () => {
-    const browser = await puppeteer.launch( { ignoreHTTPSErrors: true} ).catch(
+    const browser = await puppeteer.launch( {
+       ignoreHTTPSErrors: true,
+       headless: true  // Set to false to open X-Windows Chromium to debug
+    } ).catch(
         function (err) {
             console.log('ERROR Creating browser: ' + err);
             process.exit(22);
@@ -37,10 +40,12 @@ if (process.argv.length < 3) {
         });
     await page.setRequestInterception(true);
     page.on('request', request => {
-        if ( request.url().includes('google-analytics') &&
-             ( request.url().includes('/collect') ||
-               request.url().includes('/batch') ||
-               request.url().includes('/__utm')
+        if ( request.url().includes('code.jquery.com/') ||  // our IP will be blocked if we keep hitting
+             ( request.url().includes('google-analytics') &&
+               ( request.url().includes('/collect') ||
+                 request.url().includes('/batch') ||
+                 request.url().includes('/__utm')
+               )
              )
            ) {
             // console.log("# SKIP:  " + request.url() + "\n");
@@ -70,4 +75,3 @@ if (process.argv.length < 3) {
         process.exit(51);
     });
 })();
-
