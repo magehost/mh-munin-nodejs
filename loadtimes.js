@@ -53,6 +53,7 @@ if (process.argv.length < 3) {
     page.goto(process.argv[2], {timeout: 20 * 1000}).then(function () {
         page.evaluate(() => {
             return JSON.stringify({
+                'sampleTime': Math.floor(Date.now() / 1000),
                 'timing': performance.timing,
                 'entry': performance.getEntriesByType('navigation')[0]
             });
