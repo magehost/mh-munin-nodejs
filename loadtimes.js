@@ -11,16 +11,61 @@
 'use strict';
 
 const puppeteer = require('puppeteer');
+const fs = require('fs')
 
 if (process.argv.length < 3) {
     console.log("\n\tUsage: " + __filename + " [URL]\n");
     process.exit(-1);
 }
 
+const tempDir = '/dev/shm/' + require("os").userInfo().username + '/mh-munin-nodejs/datadir-' + process.pid; 
+if (fs.existsSync(tempDir)) {
+    fs.rmdirSync(tempDir, { recursive: true });
+}
+fs.mkdir(tempDir, { recursive: true }, (err) => {
+    if (err) throw err;
+});
+
 (async () => {
     const browser = await puppeteer.launch( {
        ignoreHTTPSErrors: true,
-       headless: true  // Set to false to open X-Windows Chromium to debug
+       headless: true,  // Set to false to open X-Windows Chromium to debug
+       args: [
+           //  default options
+           '--disable-background-networking',
+           '--enable-features=NetworkService,NetworkServiceInProcess',
+           '--disable-background-timer-throttling',
+           '--disable-backgrounding-occluded-windows',
+           '--disable-breakpad',
+           '--disable-client-side-phishing-detection',
+           '--disable-component-extensions-with-background-pages',
+           '--disable-default-apps',
+           //'--disable-dev-shm-usage',
+           '--disable-extensions',
+           '--disable-features=TranslateUI',
+           '--disable-hang-monitor',
+           '--disable-ipc-flooding-protection',
+           '--disable-popup-blocking',
+           '--disable-prompt-on-repost',
+           '--disable-renderer-backgrounding',
+           '--disable-sync',
+           '--force-color-profile=srgb',
+           '--metrics-recording-only',
+           '--no-first-run',
+           '--enable-automation',
+           '--password-store=basic',
+           '--use-mock-keychain',
+           '--headless',
+           '--hide-scrollbars',
+           '--mute-audio about:blank',
+           '--remote-debugging-port=0',
+           '--user-data-dir='+tempDir,
+           //  /default options      
+           //  Inspiration: https://github.com/puppeteer/puppeteer/issues/824    
+           '--disable-dev-profile',
+           '--disable-translate',
+           '--audio-output-channels=0',
+       ]
     } ).catch(
         function (err) {
             console.log('ERROR Creating browser: ' + err);
