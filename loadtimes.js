@@ -11,7 +11,7 @@
 'use strict';
 
 const puppeteer = require('puppeteer');
-const fs = require('fs')
+const fs = require('fs-extra')
 
 if (process.argv.length < 3) {
     console.log("\n\tUsage: " + __filename + " [URL]\n");
@@ -20,11 +20,23 @@ if (process.argv.length < 3) {
 
 const tempDir = '/dev/shm/' + require("os").userInfo().username + '/mh-munin-nodejs/datadir-' + process.pid; 
 if (fs.existsSync(tempDir)) {
-    fs.rmdirSync(tempDir, { recursive: true });
+    fs.removeSync(tempDir, { recursive: true });
 }
-fs.mkdir(tempDir, { recursive: true }, (err) => {
-    if (err) throw err;
-});
+fs.mkdirSync(tempDir, { recursive: true, mode: 0o2700 });
+
+function exitHandler(options, exitCode) {
+    fs.removeSync(tempDir);
+    if (options.exit) process.exit();
+}
+//do something when app is closing
+process.on('exit', exitHandler.bind(null,{normalExit:true}));
+//catches ctrl+c event
+process.on('SIGINT', exitHandler.bind(null, {exit:true}));
+// catches "kill pid" (for example: nodemon restart)
+process.on('SIGUSR1', exitHandler.bind(null, {exit:true}));
+process.on('SIGUSR2', exitHandler.bind(null, {exit:true}));
+//catches uncaught exceptions
+process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
 (async () => {
     const browser = await puppeteer.launch( {
@@ -110,14 +122,17 @@ fs.mkdir(tempDir, { recursive: true }, (err) => {
         }).then(function (json) {
             console.log(json);
             browser.close();
+//            fs.rmdirSync(tempDir, { recursive: true });
         }).catch(function (err) {
             console.log('ERROR Page Evaluate failed: ' + err);
             browser.close();
+//            fs.rmdirSync(tempDir, { recursive: true });
             process.exit(46);
         });
     }).catch(function (err) {
         console.log('ERROR URL Load failed: ' + err);
         browser.close();
+//        fs.rmdirSync(tempDir, { recursive: true });
         process.exit(51);
     });
 })();

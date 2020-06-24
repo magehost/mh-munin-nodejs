@@ -1,5 +1,5 @@
 {
-  "version": "1.2.5",
+  "version": "1.2.6",
   "author": {
     "name": "MageHost.pro - Jeroen Vermeulen"
   },
@@ -8,7 +8,8 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "puppeteer": "^2.0"
+    "fs-extra": "^9.0",
+    "puppeteer": "^2.1.1"
   },
   "deprecated": false,
   "description": "MageHost's NodeJS scripts for Munin",
