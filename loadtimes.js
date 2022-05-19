@@ -18,7 +18,11 @@ if (process.argv.length < 3) {
     process.exit(-1);
 }
 
-const tempDir = '/dev/shm/' + require("os").userInfo().username + '/mh-munin-nodejs/datadir-' + process.pid; 
+var tempRoot = '/dev/shm';
+if (!fs.existsSync(tempRoot)) {
+    tempRoot = '/tmp'
+}
+const tempDir = tempRoot + '/' + require("os").userInfo().username + '/mh-munin-nodejs/datadir-' + process.pid; 
 if (fs.existsSync(tempDir)) {
     fs.removeSync(tempDir, { recursive: true });
 }
