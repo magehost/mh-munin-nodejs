@@ -93,7 +93,7 @@ process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
             browser.close();
             process.exit(27);
         });
-    await page.setUserAgent('MageHost.pro Munin LoadTimes Measure').catch(
+    await page.setUserAgent('Savvii Munin LoadTimes Measure').catch(
         function (err) {
             console.log('ERROR Setting user agent: ' + err);
             browser.close();
